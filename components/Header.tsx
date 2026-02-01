@@ -18,12 +18,8 @@ const Header = () => {
             href="/"
             className={cn("nav-link", {
               "is-active": pathname === "/",
-              "is-home" : true
+              "is-home": true,
             })}
-            //   className={cn("nav-link", {
-            //     "is-active": pathname === "/",
-            //     "is-home": true,
-            //   })}
           >
             Home
           </Link>
@@ -31,11 +27,10 @@ const Header = () => {
           <p>Search Modal</p>
 
           <Link
-            className="nav-link"
             href="/coins"
-            //   className={cn("nav-link", {
-            //     "is-active": pathname === "/coins",
-            //   })}
+            className={cn("nav-link", {
+              "is-active": pathname === "/coins",
+            })}
           >
             All Coins
           </Link>
