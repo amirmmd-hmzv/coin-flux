@@ -7,13 +7,17 @@ import Link from "next/link";
 import Image from "next/image";
 
 const TrendingCoins = async () => {
-  const trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
-    "/search/trending",
-    undefined,
-    300,
-  );
-  console.log("api", trendingCoins.coins);
-  console.log(trendingCoinsData);
+  let trendingCoins;
+  try {
+    trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
+      "/search/trending",
+      undefined,
+      300,
+    );
+  } catch (error) {
+    console.error("Error fetching trending coins:", error);
+    return <div>Failed to load trending coins</div>;
+  }
 
   const columns: DataTableColumn<TrendingCoin>[] = [
     {

@@ -3,27 +3,27 @@ import { formatCurrency } from "@/lib/utils";
 import Image from "next/image";
 
 const CoinOverview = async () => {
-  const coin = await fetcher<CoinDetailsData>("/coins/bitcoin", {
-    dex_pair_format: "symbol",
-  });
-
+  let coin;
+  try {
+    coin = await fetcher<CoinDetailsData>("/coins/bitcoin", {
+      dex_pair_format: "symbol",
+    });
+  } catch (error) {
+    console.error("Error fetching coin overview:", error);
+    return <div>Failed to load coin overview</div>;
+  }
   return (
-      <div id="coin-overview">
-        <div className="header pt-2.5">
-          <Image
-            width={56}
-            height={56}
-            alt={coin.name}
-            src={coin.image.large}
-          />
-          <div className="info">
-            <p>
-              {coin.name} / {coin.symbol.toUpperCase()}
-            </p>
-            <h1>{formatCurrency(coin.market_data.current_price.usd)}</h1>
-          </div>
+    <div id="coin-overview">
+      <div className="header pt-2.5">
+        <Image width={56} height={56} alt={coin.name} src={coin.image.large} />
+        <div className="info">
+          <p>
+            {coin.name} / {coin.symbol.toUpperCase()}
+          </p>
+          <h1>{formatCurrency(coin.market_data.current_price.usd)}</h1>
         </div>
       </div>
+    </div>
   );
 };
 
