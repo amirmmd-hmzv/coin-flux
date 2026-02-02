@@ -299,7 +299,7 @@
     @apply w-full flex flex-col justify-center h-full py-4 bg-dark-500 rounded-xl;
 
     h4 {
-      @apply text-xl md:text-2xl font-semibold mb-2 px-5;
+      @apply text-xl md:text-2xl font-semibold mb-4 px-5;
     }
 
     .trending-coins-table {
@@ -396,7 +396,7 @@
   }
 
   #coin-overview-fallback {
-    @apply w-full h-full xl:col-span-2 px-2 bg-dark-500 rounded-xl;
+    @apply w-full h-full xl:col-span-2 px-4 py-4 bg-dark-500 rounded-xl;
 
     .header {
       @apply flex-1 mb-2 flex gap-2 md:gap-3;

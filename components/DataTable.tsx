@@ -20,7 +20,7 @@ const DataTable = <T,>({
   headerClassName,
 }: DataTableProps<T>) => {
   return (
-    <Table className={cn("custom-scrollbar", tableClassName)}>
+    <Table className={cn("custom-scrollbar ", tableClassName)}>
       <TableHeader className={headerClassName}>
         <TableRow className={cn("hover:bg-transparent!", headerRowClassName)}>
           {columns.map((column, i) => {

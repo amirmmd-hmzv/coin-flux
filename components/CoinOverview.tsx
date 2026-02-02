@@ -8,7 +8,6 @@ const CoinOverview = async () => {
   });
 
   return (
-    <>
       <div id="coin-overview">
         <div className="header pt-2.5">
           <Image
@@ -25,7 +24,6 @@ const CoinOverview = async () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

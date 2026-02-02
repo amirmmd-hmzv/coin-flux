@@ -63,14 +63,15 @@ const TrendingCoins = async () => {
     },
   ];
   return (
-    <>
-      <p>Trending Coins</p>
+    <div id="trending-coins">
+      <h4>Trending Coins</h4>
       <DataTable
-        data={trendingCoins.coins}
+        tableClassName="trending-coins-table"
+        data={trendingCoins.coins.slice(0, 6) || []}
         columns={columns}
         rowKey={(coin, index) => `${coin.item.id}-${index}`}
       />
-    </>
+    </div>
   );
 };
 
