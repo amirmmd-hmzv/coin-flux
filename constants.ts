@@ -33,7 +33,6 @@ export const getCandlestickConfig = (): CandlestickSeriesPartialOptions => ({
   wickDownColor: CHART_COLORS.candleDown,
   borderVisible: true,
   wickVisible: true,
-  borderColor: "red"
 });
 
 export const getChartConfig = (

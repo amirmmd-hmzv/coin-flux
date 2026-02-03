@@ -26,7 +26,6 @@ const CandlestickChart = ({
   // data,
   height = 360,
 }: CandlestickChartProps) => {
-  const [loading, setLoading] = useState(false);
   const [period, setPeriod] = useState(initialPeriod);
   const [ohlcData, setOhlcData] = useState<OHLCData[]>(data ?? []);
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
@@ -83,11 +82,49 @@ const CandlestickChart = ({
           item[4],
         ] as OHLCData,
     );
+    console.log("convertedToSeconds :", convertedToSeconds);
+    console.log("ohlc :", ohlcData);
 
     series.setData(convertOHLCData(convertedToSeconds));
+    chart.timeScale().fitContent();
+
+    chartRef.current = chart;
+    candleSeriesRef.current = series;
+
+    const observer = new ResizeObserver((entries) => {
+      if (!entries.length) return;
+      chart.applyOptions({ width: entries[0].contentRect.width });
+    });
+
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+      chart.remove();
+      chartRef.current = null;
+      candleSeriesRef.current = null;
+    };
+  }, [height, period]);
+
+  useEffect(() => {
+    if (!candleSeriesRef.current) return;
+
+    const convertedToSeconds = ohlcData.map(
+      (item) =>
+        [
+          Math.floor(item[0] / 1000),
+          item[1],
+          item[2],
+          item[3],
+          item[4],
+        ] as OHLCData,
+    );
+    const converted = convertOHLCData(convertedToSeconds);
+    candleSeriesRef.current.setData(converted);
+    chartRef.current?.timeScale().fitContent();
 
     return () => {};
-  }, [height]);
+  }, [ohlcData, period]);
 
   return (
     <div id="candlestick-chart">
@@ -100,7 +137,7 @@ const CandlestickChart = ({
 
           {PERIOD_BUTTONS.map(({ value, label }) => (
             <button
-              disabled={loading}
+              disabled={isPending}
               key={value}
               onClick={() => {
                 handlePeriodChange(value);

@@ -37,15 +37,21 @@ export function formatCurrency(
   });
 }
 export function convertOHLCData(data: OHLCData[]) {
-  return data
+  const turnedData = data
+    // Step 1: Convert array-based OHLC data into object-based candlestick data
     .map((d) => ({
-      time: d[0] as Time, // ensure seconds, not ms
+      // 'time' must be in seconds (not milliseconds) and of type Time
+      time: d[0] as Time,
       open: d[1],
       high: d[2],
       low: d[3],
       close: d[4],
     }))
+    // Step 2: Remove consecutive entries with the same timestamp
+    // lightweight-charts does not allow duplicate time values
     .filter(
       (item, index, arr) => index === 0 || item.time !== arr[index - 1].time,
     );
+
+  return turnedData;
 }
