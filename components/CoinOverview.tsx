@@ -22,7 +22,7 @@ const CoinOverview = async () => {
       <div id="coin-overview">
         <CandlestickChart
           data={coinOHLCData}
-          initialPeriod="daily"
+          // initialPeriod="daily"
           coinId="bitcoin"
         >
           <div className="header pt-2.5">

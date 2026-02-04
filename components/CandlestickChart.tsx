@@ -20,36 +20,49 @@ const CandlestickChart = ({
   children,
   initialPeriod = "daily",
   coinId,
-  liveInterval = "1m",
   data,
-  setLiveInterval = () => {},
-  // data,
-  height = 360,
+  // height = 360,
 }: CandlestickChartProps) => {
+  /* -------------------- React state -------------------- */
+
+  // Currently selected time period (daily, weekly, ...)
   const [period, setPeriod] = useState(initialPeriod);
+
+  // Raw OHLC data coming from API
   const [ohlcData, setOhlcData] = useState<OHLCData[]>(data ?? []);
-  const chartContainerRef = useRef<HTMLDivElement | null>(null);
-  const chartRef = useRef<IChartApi | null>(null);
-  const candleSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
+
+  // Used to avoid blocking UI when switching periods
   const [isPending, startTransition] = useTransition();
+
+  /* -------------------- Refs (imperative objects) -------------------- */
+
+  // DOM container for the chart
+  const chartContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // Chart instance (created once, reused)
+  const chartRef = useRef<IChartApi | null>(null);
+
+  // Candlestick series instance (used to update data only)
+  const candleSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
+
+  /* -------------------- Data fetching -------------------- */
 
   const fetchOHLCData = async (selectedPeriod: Period) => {
     try {
-      const { days, interval } = PERIOD_CONFIG[selectedPeriod];
+      const { days } = PERIOD_CONFIG[selectedPeriod];
 
       const newData = await fetcher<OHLCData[]>(`/coins/${coinId}/ohlc`, {
         vs_currency: "usd",
         days,
-        // interval,
         precision: "full",
       });
 
-      console.log(newData);
+      // Update state in a transition to keep UI responsive
       startTransition(() => {
         setOhlcData(newData ?? []);
       });
     } catch (e) {
-      console.error("Failed to fetch OHLCData", e);
+      console.error("Failed to fetch OHLC data", e);
     }
   };
 
@@ -60,52 +73,82 @@ const CandlestickChart = ({
     fetchOHLCData(newPeriod);
   };
 
+  /* -------------------- Effect #1: create & destroy chart -------------------- */
+  /**
+   * This effect is responsible for:
+   * - Creating the chart instance
+   * - Adding the candlestick series
+   * - Handling resize behavior
+   * - Cleaning everything up on unmount
+   *
+   * It should NOT run on every data change.
+   */
   useEffect(() => {
     const container = chartContainerRef.current;
     if (!container) return;
+
+    // Show date or time based on selected period
     const showTime = ["daily", "weekly", "monthly"].includes(period);
 
+    // Create the chart (imperative API)
+
     const chart = createChart(container, {
-      ...getChartConfig(height, showTime),
+      ...getChartConfig(undefined, showTime),
       width: container.clientWidth,
     });
 
+    // Add candlestick series once
     const series = chart.addSeries(CandlestickSeries, getCandlestickConfig());
 
+    // Save references for later updates
+    chartRef.current = chart;
+    candleSeriesRef.current = series;
+
+    // Initial data setup
     const convertedToSeconds = ohlcData.map(
       (item) =>
         [
-          Math.floor(item[0] / 1000),
+          Math.floor(item[0] / 1000), // ms → seconds (required by lightweight-charts)
           item[1],
           item[2],
           item[3],
           item[4],
         ] as OHLCData,
     );
-    console.log("convertedToSeconds :", convertedToSeconds);
-    console.log("ohlc :", ohlcData);
 
     series.setData(convertOHLCData(convertedToSeconds));
     chart.timeScale().fitContent();
 
-    chartRef.current = chart;
-    candleSeriesRef.current = series;
-
+    // ResizeObserver keeps the chart responsive
     const observer = new ResizeObserver((entries) => {
+      console.log(entries);
       if (!entries.length) return;
-      chart.applyOptions({ width: entries[0].contentRect.width });
+      chart.applyOptions({
+        width: entries[0].contentRect.width,
+        // height: entries[0].contentRect.height,
+      });
     });
 
     observer.observe(container);
 
+    // Cleanup: remove chart and observers
     return () => {
       observer.disconnect();
       chart.remove();
       chartRef.current = null;
       candleSeriesRef.current = null;
     };
-  }, [height, period]);
+  }, [period]);
 
+  /* -------------------- Effect #2: update data only -------------------- */
+  /**
+   * This effect:
+   * - Runs when data or period changes
+   * - Updates ONLY the series data
+   * - Does NOT recreate the chart
+   *
+   * This keeps updates fast and prevents flickering.
+   */
   useEffect(() => {
     if (!candleSeriesRef.current) return;
 
@@ -119,29 +162,30 @@ const CandlestickChart = ({
           item[4],
         ] as OHLCData,
     );
-    const converted = convertOHLCData(convertedToSeconds);
-    candleSeriesRef.current.setData(converted);
-    chartRef.current?.timeScale().fitContent();
 
-    return () => {};
+    const formattedData = convertOHLCData(convertedToSeconds);
+
+    candleSeriesRef.current.setData(formattedData);
+    chartRef.current?.timeScale().fitContent();
   }, [ohlcData, period]);
 
+  /* -------------------- Render -------------------- */
+
   return (
-    <div id="candlestick-chart">
+    <div id="candlestick-chart" className="flex flex-col h-full">
       <div className="chart-header">
         <div className="flex-1">{children}</div>
-        <div className="flex gap-3 xl:gap-2 items-center">
-          <span className="text-sm mx-2 font-medium text-purple-100/50">
+
+        <div className="flex gap-3 items-center">
+          <span className="text-sm font-medium text-purple-100/50">
             Period:
           </span>
 
           {PERIOD_BUTTONS.map(({ value, label }) => (
             <button
-              disabled={isPending}
               key={value}
-              onClick={() => {
-                handlePeriodChange(value);
-              }}
+              disabled={isPending}
+              onClick={() => handlePeriodChange(value)}
               className={
                 period === value ? "config-button-active" : "config-button"
               }
@@ -151,7 +195,13 @@ const CandlestickChart = ({
           ))}
         </div>
       </div>
-      <div ref={chartContainerRef} className="chart" style={{ height }} />
+
+      {/* Chart container (controlled only via ref) */}
+      <div
+        ref={chartContainerRef}
+        className="chart flex-1 "
+        //  style={{ height }}
+      />
     </div>
   );
 };
