@@ -93,7 +93,7 @@ const CandlestickChart = ({
     // Create the chart (imperative API)
 
     const chart = createChart(container, {
-      ...getChartConfig(undefined, showTime),
+      ...getChartConfig(container.clientHeight, showTime),
       width: container.clientWidth,
     });
 
