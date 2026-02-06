@@ -852,7 +852,7 @@
       }
 
       .page-link-active {
-        @apply bg-green-500! text-dark-900 font-semibold;
+        @apply bg-green-500!  text-dark-900 font-semibold;
       }
     }
   }

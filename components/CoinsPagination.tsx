@@ -8,7 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { buildPagination, ELLIPSIS } from "@/lib/utils";
+import { buildPagination, cn, ELLIPSIS } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 const CoinsPagination = ({
   hasMorePage,
@@ -31,7 +31,7 @@ const CoinsPagination = ({
   return (
     <Pagination id="coins-pagination">
       <PaginationContent className="pagination-content ">
-        <PaginationItem className="pagination-control prev">
+        <PaginationItem className="">
           <PaginationPrevious
             className={`${currentPage <= 1 ? "control-disabled" : "control-button"}`}
             onClick={() => handlePeriodChange(currentPage - 1)}
@@ -43,15 +43,18 @@ const CoinsPagination = ({
             if (page === ELLIPSIS) {
               return (
                 <PaginationItem key={`ellipsis-${Math.random()}`}>
-                  <PaginationEllipsis />
+                  <span className="ellipsis">...</span>
                 </PaginationItem>
               );
             }
             return (
               <PaginationItem key={`page-${page}`}>
                 <PaginationLink
-                  href="#"
-                  className={page === currentPage ? "active" : "page-link"}
+                  className={cn(
+                    "page-link",
+                    page == currentPage &&
+                      "page-link-active  ",
+                  )}
                   isActive={page === currentPage}
                   onClick={() => handlePeriodChange(page)}
                 >
@@ -62,9 +65,12 @@ const CoinsPagination = ({
           })}
         </div>
 
-        <PaginationItem className="pagination-control next">
+        <PaginationItem className="">
           <PaginationNext
-            className={`${isLastPage ? "control-disabled" : "control-button"}`}
+            className={cn(
+              " ",
+              isLastPage ? "control-disabled" : "control-button",
+            )}
             onClick={() => handlePeriodChange(currentPage + 1)}
           />
         </PaginationItem>
