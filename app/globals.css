@@ -586,7 +586,7 @@
       }
 
       .price-cell {
-        @apply py-4 font-medium;
+        @apply py-4  font-medium;
       }
 
       .change-cell {
@@ -598,7 +598,7 @@
       }
 
       .market-cap-cell {
-        @apply pr-5 font-medium;
+        @apply pr-5  font-medium;
       }
     }
   }
