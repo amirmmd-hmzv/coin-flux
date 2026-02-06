@@ -55,3 +55,42 @@ export function convertOHLCData(data: OHLCData[]) {
 
   return turnedData;
 }
+
+export const ELLIPSIS = "ellipsis" as const;
+export type PaginationItem = number | typeof ELLIPSIS;
+
+export function buildPagination(
+  currentPage: number,
+  totalPages: number,
+  siblingCount: number = 1, // pages before & after current
+): PaginationItem[] {
+  const pages: PaginationItem[] = [];
+
+  // Always show first page
+  pages.push(1);
+
+  const leftSibling = Math.max(currentPage - siblingCount, 2);
+  const rightSibling = Math.min(currentPage + siblingCount, totalPages - 1);
+
+  // LEFT ellipsis
+  if (leftSibling > 2) {
+    pages.push(ELLIPSIS);
+  }
+
+  // Middle pages
+  for (let page = leftSibling; page <= rightSibling; page++) {
+    pages.push(page);
+  }
+
+  // RIGHT ellipsis
+  if (rightSibling < totalPages - 1) {
+    pages.push(ELLIPSIS);
+  }
+
+  // Always show last page
+  if (totalPages > 1) {
+    pages.push(totalPages);
+  }
+
+  return pages;
+}

@@ -143,3 +143,8 @@ interface CoinMarketData {
   atl_date: string;
   last_updated: string;
 }
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  hasMorePage: boolean;
+}

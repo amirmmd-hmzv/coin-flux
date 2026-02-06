@@ -1,21 +1,36 @@
+import CoinsPagination from "@/components/CoinsPagination";
 import DataTable from "@/components/DataTable";
 import { fetcher } from "@/lib/coingecko.actions";
 import { formatCurrency, formatPercentage } from "@/lib/utils";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
-const Coins = async () => {
+const Coins = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
+  const { page } = await searchParams;
+
+  const currentPage = Number(page) || 1;
+  const per_page = 10;
+
+  console.log(searchParams);
+
   const coins = await fetcher<CoinMarketData[]>("/coins/markets", {
     vs_currency: "usd",
     order: "market_cap_desc",
-    per_page: 10,
-    page: 1,
+    per_page,
+    page: currentPage,
     sparkline: false,
   });
 
   console.log(coins);
+
+  const hasMorePage = coins.length === per_page;
+  const estimatedTotalPages =
+    currentPage >= 100 ? Math.ceil(currentPage / 100) * 100 + 100 : 100;
 
   const columns: DataTableColumn<CoinMarketData>[] = [
     {
@@ -84,6 +99,12 @@ const Coins = async () => {
           rowKey={(_, index) => `al-${index}`}
           columns={columns}
           data={coins}
+        />
+
+        <CoinsPagination
+          hasMorePage={hasMorePage}
+          totalPages={estimatedTotalPages}
+          currentPage={currentPage}
         />
       </div>
     </main>
