@@ -35,7 +35,7 @@ const Coins = async ({
   const columns: DataTableColumn<CoinMarketData>[] = [
     {
       header: "Rank",
-      cellClassName: "coin-cell",
+      cellClassName: "rank-cell",
       cell: (coin) => {
         return (
           <>

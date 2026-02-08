@@ -71,6 +71,7 @@ interface CoinDetailsData {
     market_cap: {
       usd: number;
     };
+    market_cap_rank: number;
     total_volume: {
       usd: number;
     };
@@ -101,7 +102,7 @@ interface CandlestickChartProps {
   data?: OHLCData[];
   liveOhlcv?: OHLCData | null;
   coinId: string;
-  height?: number;
+  height?: number | null;
   children?: React.ReactNode;
   mode?: "historical" | "live";
   initialPeriod?: Period;
@@ -147,4 +148,66 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   hasMorePage: boolean;
+}
+
+interface ExtendedPriceData {
+  usd: number;
+  coin?: string;
+  price?: number;
+  change24h?: number;
+  marketCap?: number;
+  volume24h?: number;
+  timestamp?: number;
+}
+
+interface WebSocketMessage {
+  type?: string;
+  c?: string;
+  ch?: string;
+  i?: string;
+  p?: number;
+  pp?: number;
+  pu?: number;
+  m?: number;
+  v?: number;
+  vo?: number;
+  o?: number;
+  h?: number;
+  l?: number;
+  t?: number;
+  to?: number;
+  ty?: string;
+  channel?: string;
+  identifier?: string;
+}
+interface NextPageProps {
+  params: Promise<{ [key: string]: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+interface PoolData {
+  id: string;
+  address: string;
+  name: string;
+  network: string;
+}
+
+interface LiveDataProps {
+  coinId: string;
+  poolId: string;
+  coin: CoinDetailsData;
+  ohlcv?: OHLCData[];
+  symbol: string;
+  children?: React.ReactNode;
+}
+type NormalizedPrice = {
+  usd: number;
+  change24h: number;
+};
+interface LiveCoinHeaderProps {
+  name: string;
+  image: string;
+  livePrice?: number;
+  livePriceChangePercentage24h: number;
+  priceChangePercentage30d: number;
+  priceChange24h: number;
 }
