@@ -1,5 +1,6 @@
 // 'use client';
 
+import Converter from "@/components/Converter";
 import LiveDataWrapper from "@/components/LiveDataWrapper";
 import { fetcher, getPools } from "@/lib/coingecko.actions";
 import { formatCurrency } from "@/lib/utils";
@@ -45,7 +46,6 @@ const CoinDetails = async ({ params }: NextPageProps) => {
     //   liveInterval: "1m",
     // });
 
-
     const coinDetails = [
       {
         label: "Market Cap",
@@ -80,7 +80,7 @@ const CoinDetails = async ({ params }: NextPageProps) => {
     ];
 
     return (
-      <main id="coin-details-age">
+      <main id="coin-details-page">
         <section className="primary">
           <LiveDataWrapper
             coinId={id}
@@ -103,6 +103,12 @@ const CoinDetails = async ({ params }: NextPageProps) => {
         </section>
 
         <section className="secondary">
+          <Converter
+            symbol={coinData.symbol}
+            icon={coinData.image.small}
+            priceList={coinData.market_data.current_price}
+          />
+
           <h2 className="text-2xl font-bold">Coins Details</h2>
 
           <div className="details">
