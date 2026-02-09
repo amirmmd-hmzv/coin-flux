@@ -20,13 +20,11 @@ const CoinsPagination = ({
   const handlePeriodChange = (newPage: number) => {
     // Logic to handle page change
     router.push(`/coins?page=${newPage}`);
-    console.log("Change to page:", newPage);
   };
 
   const pageNumbers = buildPagination(currentPage, totalPages);
   const isLastPage = !hasMorePage || currentPage >= totalPages;
 
-  console.log(pageNumbers);
 
   return (
     <Pagination id="coins-pagination">

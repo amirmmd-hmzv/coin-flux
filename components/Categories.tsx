@@ -31,7 +31,6 @@ const Categories = async () => {
       header: "24h Change",
       cellClassName: "change-header-cell",
       cell: (coin) => {
-        console.log(coin);
         const item = coin.market_cap_change_24h;
 
         const isTrendingUp = item > 0;

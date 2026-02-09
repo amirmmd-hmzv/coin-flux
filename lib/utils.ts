@@ -6,13 +6,16 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatPercentage(change: number | null | undefined): string {
-  if (change === null || change === undefined || isNaN(change)) {
-    return "0.0%";
-  }
-  const formattedChange = change.toFixed(1);
-  return `${formattedChange}%`;
+export function formatPercentage(
+  change: number | null | undefined,
+  options?: { ratio?: boolean }
+): string {
+  if (change == null || isNaN(change)) return "0.0%";
+
+  const value = options?.ratio ? change * 100 : change;
+  return `${value.toFixed(1)}%`;
 }
+
 export function formatCurrency(
   value: number | null | undefined,
   digits?: number,

@@ -128,7 +128,6 @@ const CandlestickChart = ({
 
     // ResizeObserver keeps the chart responsive
     const observer = new ResizeObserver((entries) => {
-      console.log(entries);
       if (!entries.length) return;
       chart.applyOptions({
         width: entries[0].contentRect.width,
@@ -188,7 +187,6 @@ const CandlestickChart = ({
 
     const converted = convertOHLCData(merged);
 
-    console.log(merged);
 
     candleSeriesRef.current.setData(converted);
     chartRef.current?.timeScale().fitContent();

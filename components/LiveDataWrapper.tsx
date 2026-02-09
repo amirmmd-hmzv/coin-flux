@@ -22,7 +22,7 @@ const LiveDataWrapper = ({
     interval: liveInterval,
     symbol: `${symbol.toUpperCase()}USDT`,
   });
-
+  console.log(price);
   const tradeColumns: DataTableColumn<any>[] = [
     {
       header: "Price",
@@ -56,8 +56,6 @@ const LiveDataWrapper = ({
       cell: (trade) => (trade.timestamp ? timeAgo(trade.timestamp) : "-"),
     },
   ];
-
-  console.log(price);
 
   return (
     <section id="live-data-wrapper" className="p-3">

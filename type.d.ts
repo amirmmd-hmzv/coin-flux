@@ -202,6 +202,7 @@ interface LiveDataProps {
 type NormalizedPrice = {
   usd: number;
   change24h: number;
+  change24hValue : number;
 };
 interface LiveCoinHeaderProps {
   name: string;

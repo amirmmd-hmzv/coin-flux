@@ -30,11 +30,10 @@ export const useBinanceWebSocket = ({
     if (!symbol) return;
 
     const streams = [
-      `${symbol.toLowerCase()}@markPrice`,
+      `${symbol.toLowerCase()}@ticker`,
       `${symbol.toLowerCase()}@trade`,
       `${symbol.toLowerCase()}@kline_${interval}`,
     ].join("/");
-    console.log(streams);
 
     const ws = new WebSocket(
       `wss://fstream.binance.com/stream?streams=${streams}`,
@@ -50,7 +49,6 @@ export const useBinanceWebSocket = ({
     ws.onmessage = (event) => {
       const msg = JSON.parse(event.data);
       const data = msg.data;
-      console.log(data);
 
       if (!data) return;
 
@@ -59,6 +57,15 @@ export const useBinanceWebSocket = ({
         setPrice({
           usd: Number(data.p),
           change24h: Number(data.r), // percent change 24h
+          change24hValue: Number(data.p),
+        });
+      }
+
+      if (data.e === "24hrTicker") {
+        setPrice({
+          usd: Number(data.c), // آخرین قیمت
+          change24h: Number(data.P), // درصد تغییر 24h
+          change24hValue: Number(data.p), // مقدار تغییر 24h
         });
       }
 
@@ -78,7 +85,6 @@ export const useBinanceWebSocket = ({
       // 📊 OHLCV
       if (data.e === "kline") {
         const k = data.k;
-        console.log(k);
 
         const candle: Candle = [
           k.t,

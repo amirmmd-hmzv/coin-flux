@@ -23,7 +23,6 @@ const CoinDetails = async ({ params }: NextPageProps) => {
       }),
     ]);
 
-    console.log(coinData);
     const platform = coinData.asset_platform_id
       ? coinData.detail_platforms?.[coinData.asset_platform_id]
       : null;
@@ -32,7 +31,6 @@ const CoinDetails = async ({ params }: NextPageProps) => {
 
     const pool = await getPools(id, network, contractAddress);
 
-    console.log(platform);
     // const coinData = await fetcher<CoinDetailsData>(`/coins/${id}`, {});
 
     // const ohlcData = await fetcher<OHLCData>(`/coins/${id}/ohlc`, {
@@ -47,7 +45,6 @@ const CoinDetails = async ({ params }: NextPageProps) => {
     //   liveInterval: "1m",
     // });
 
-    console.log(coinData);
 
     const coinDetails = [
       {

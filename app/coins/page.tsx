@@ -16,7 +16,6 @@ const Coins = async ({
   const currentPage = Number(page) || 1;
   const per_page = 10;
 
-  console.log(searchParams);
 
   const coins = await fetcher<CoinMarketData[]>("/coins/markets", {
     vs_currency: "usd",
@@ -26,7 +25,6 @@ const Coins = async ({
     sparkline: false,
   });
 
-  console.log(coins);
 
   const hasMorePage = coins.length === per_page;
   const estimatedTotalPages =
