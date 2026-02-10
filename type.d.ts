@@ -106,8 +106,8 @@ interface CandlestickChartProps {
   children?: React.ReactNode;
   mode?: "historical" | "live";
   initialPeriod?: Period;
-  liveInterval?: "1s" | "1m";
-  setLiveInterval?: (interval: "1s" | "1m") => void;
+  liveInterval?: "1m" | "7m";
+  setLiveInterval?: (interval: "1m" | "7m") => void;
 }
 
 interface Category {
@@ -216,4 +216,19 @@ interface ConverterProps {
   symbol: string;
   icon: string;
   priceList: Record<string, number>;
+}
+
+interface Exchange {
+  id: string;
+  name: string;
+  year_established: number;
+  country: string;
+  description: string;
+  url: string;
+  image: string;
+  has_trading_pairs: boolean;
+  trust_score: number;
+  trust_score_rank: number;
+  trade_volume_24h_btc: number;
+  trade_volume_24h_btc_normalized: number;
 }

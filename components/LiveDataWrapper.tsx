@@ -3,59 +3,16 @@
 import { useBinanceWebSocket } from "@/hooks/useBinanceWebSocket";
 import CandlestickChart from "./CandlestickChart";
 import { Separator } from "./ui/separator";
-import { formatCurrency, timeAgo } from "@/lib/utils";
-import DataTable from "./DataTable";
-import { useState } from "react";
 import CoinHeader from "./CoinHeader";
+import { useLiveInterval } from "@/context/LiveIntervalContext";
 
-const LiveDataWrapper = ({
-  coinId,
-  poolId,
-  coin,
-  ohlcv,
-  children,
-  symbol,
-}: LiveDataProps) => {
-  const [liveInterval, setLiveInterval] = useState<"1m" | "1s">("1m");
+const LiveDataWrapper = ({ coinId, coin, ohlcv, symbol }: LiveDataProps) => {
+  const { liveInterval, setLiveInterval } = useLiveInterval();
 
-  const { trades, ohlcvData, price } = useBinanceWebSocket({
+  const { ohlcvData, price } = useBinanceWebSocket({
     interval: liveInterval,
     symbol: `${symbol.toUpperCase()}USDT`,
   });
-  console.log(price);
-  const tradeColumns: DataTableColumn<any>[] = [
-    {
-      header: "Price",
-      cellClassName: "price-cell",
-      cell: (trade) => (trade.price ? formatCurrency(trade.price) : "-"),
-    },
-    {
-      header: "Amount",
-      cellClassName: "amount-cell",
-      cell: (trade) => trade.amount?.toFixed(4) ?? "-",
-    },
-    {
-      header: "Value",
-      cellClassName: "value-cell",
-      cell: (trade) => (trade.value ? formatCurrency(trade.value) : "-"),
-    },
-    {
-      header: "Buy/Sell",
-      cellClassName: "type-cell",
-      cell: (trade) => (
-        <span
-          className={trade.type === "b" ? "text-green-500" : "text-red-500"}
-        >
-          {trade.type === "b" ? "Buy" : "Sell"}
-        </span>
-      ),
-    },
-    {
-      header: "Time",
-      cellClassName: "time-cell",
-      cell: (trade) => (trade.timestamp ? timeAgo(trade.timestamp) : "-"),
-    },
-  ];
 
   return (
     <section id="live-data-wrapper" className="p-3">
@@ -91,7 +48,7 @@ const LiveDataWrapper = ({
       <Separator className="divider" />
       {/* {children} */}
 
-      {trades.length > 0 && (
+      {/* {trades.length > 0 && (
         <div className="trades">
           <h4>Recent Trades</h4>
           <DataTable
@@ -101,7 +58,7 @@ const LiveDataWrapper = ({
             tableClassName="trades-table"
           />
         </div>
-      )}
+      )} */}
     </section>
   );
 };

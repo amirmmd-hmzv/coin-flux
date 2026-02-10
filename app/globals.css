@@ -490,8 +490,45 @@
       @apply size-full max-lg:mt-8 lg:col-span-1;
     }
 
+    .recent-section {
+      @apply size-full xl:col-span-3;
+
+
+           .trades {
+      @apply w-full my-8 space-y-4;
+
+      h4 {
+        @apply text-xl md:text-2xl font-semibold mb-2;
+      }
+    }
+
+    .trades-table {
+      @apply bg-dark-500 mt-5 rounded-xl overflow-hidden;
+
+      .price-cell {
+        @apply pl-5 py-5 font-medium;
+      }
+
+      .amount-cell {
+        @apply py-4 font-medium;
+      }
+
+      .value-cell {
+        @apply font-medium;
+      }
+
+      .type-cell {
+        @apply font-medium;
+      }
+
+      .time-cell {
+        @apply pr-5;
+      }
+    }
+    }
+
     .exchange-section {
-      @apply w-full mt-8 space-y-4;
+      @apply w-full  mt-4 space-y-4 xl:col-span-3;
 
       h4 {
         @apply text-xl md:text-2xl font-semibold mb-2;
@@ -502,7 +539,7 @@
       @apply bg-dark-500 rounded-xl overflow-hidden mt-5;
 
       .exchange-name {
-        @apply text-green-500 font-bold;
+        @apply text-green-500 font-bold pl-5 py-5;
 
         a {
           @apply absolute inset-0 z-10;
@@ -510,7 +547,7 @@
       }
 
       .pair {
-        @apply font-medium h-full flex gap-1 py-4 pr-5 space-x-2;
+        @apply font-medium h-full flex gap-1 py-5 px-4;
 
         p {
           @apply truncate max-w-20 md:max-w-30 h-full;
@@ -518,11 +555,11 @@
       }
 
       .price-cell {
-        @apply font-medium;
+        @apply font-medium py-5 px-4;
       }
 
       .time-cell {
-        @apply pr-5 text-end;
+        @apply font-medium py-5 px-4 text-end;
       }
     }
 
@@ -715,7 +752,7 @@
 
       p {
         @apply text-base  font-medium;
-      } 
+      }
 
       .select-trigger {
         @apply w-fit! border-none! cursor-pointer! h-12! bg-dark-400! hover:bg-dark-400! focus-visible:ring-0!;
@@ -858,7 +895,7 @@
   }
 
   #live-data-wrapper {
-    @apply size-full xl:col-span-2;
+    @apply size-full xl:col-span-3;
 
     .divider {
       @apply my-8! bg-purple-600!;

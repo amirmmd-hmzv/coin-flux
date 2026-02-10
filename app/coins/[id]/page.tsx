@@ -1,7 +1,9 @@
 // 'use client';
 
 import Converter from "@/components/Converter";
+import ExchangeListing from "@/components/ExchangeListing";
 import LiveDataWrapper from "@/components/LiveDataWrapper";
+import RecentTradesSection from "@/components/RecentTradesSection";
 import { fetcher, getPools } from "@/lib/coingecko.actions";
 import { formatCurrency } from "@/lib/utils";
 import { link } from "fs";
@@ -88,18 +90,7 @@ const CoinDetails = async ({ params }: NextPageProps) => {
             poolId={pool.id}
             coin={coinData}
             ohlcv={ohlcData}
-          >
-            Exchange Listing
-          </LiveDataWrapper>
-          <h4 className="text-3xl font-bold">
-            Coin <strong>{id}</strong>
-          </h4>
-
-          <p>Trend Overview</p>
-
-          <p>Recent Trades</p>
-
-          <p>Exchange Listing </p>
+          />
         </section>
 
         <section className="secondary">
@@ -109,9 +100,8 @@ const CoinDetails = async ({ params }: NextPageProps) => {
             priceList={coinData.market_data.current_price}
           />
 
-          <h2 className="text-2xl font-bold">Coins Details</h2>
-
           <div className="details">
+            <h2 className="text-2xl font-bold">Coins Details</h2>
             <ul className="details-grid">
               {coinDetails.map(({ label, value, link, linkText }, index) => {
                 return (
@@ -139,6 +129,14 @@ const CoinDetails = async ({ params }: NextPageProps) => {
 
             <p>Top Gainers And Losers</p>
           </div>
+        </section>
+
+        <section className="exchange-section">
+          <ExchangeListing coinId={id} />
+        </section>
+
+        <section className="recent-section">
+          <RecentTradesSection symbol={coinData.symbol} />
         </section>
       </main>
     );
