@@ -41,8 +41,6 @@ export async function fetcher<T>(
   return response.json();
 }
 
-
-
 export async function getPools(
   id: string,
   network?: string | null,
@@ -78,4 +76,69 @@ export async function getPools(
   } catch {
     return fallback;
   }
+}
+
+export async function searchCoins(query: string): Promise<SearchCoin[]> {
+  if (!query || query.trim().length < 2) return [];
+
+  // 1) search endpoint (ids only)
+  const searchResult = await fetcher<{
+    coins: {
+      id: string;
+      name: string;
+      symbol: string;
+      thumb: string;
+    }[];
+  }>("search", { query }, 30);
+
+  const ids = searchResult.coins
+    .slice(0, 10)
+    .map((coin) => coin.id)
+    .join(",");
+
+
+  if (!ids) return [];
+
+  // 2) markets endpoint (price + change)
+  const markets = await fetcher<
+    {
+      id: string;
+      name: string;
+      symbol: string;
+      current_price: number;
+      price_change_percentage_24h: number;
+      image: {
+        thumb?: string;
+        large?: string;
+      };
+      market_cap_rank: number | null;
+    }[]
+  >(
+    "coins/markets",
+    {
+      vs_currency: "usd",
+      ids,
+      order: "market_cap_desc",
+    },
+    30,
+  );
+
+  // 3) merge final result with search coins metadata
+  const finalResult = markets.map((coin) => {
+    const searchCoin = searchResult.coins.find((c) => c.id === coin.id);
+    return {
+      id: coin.id,
+      name: coin.name,
+      symbol: coin.symbol.toUpperCase(),
+      thumb: searchCoin?.thumb || coin.image?.thumb || "",
+      large: coin.image?.large || coin.image?.thumb || "",
+      market_cap_rank: coin.market_cap_rank,
+      data: {
+        price: coin.current_price ?? undefined,
+        price_change_percentage_24h: coin.price_change_percentage_24h ?? 0,
+      },
+    };
+  });
+  console.log(finalResult);
+  return finalResult;
 }

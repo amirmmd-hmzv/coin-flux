@@ -232,3 +232,28 @@ interface Exchange {
   trade_volume_24h_btc: number;
   trade_volume_24h_btc_normalized: number;
 }
+type SearchCoinResult = {
+  id: string;
+  name: string;
+  symbol: string;
+  image: string;
+  current_price: number | null;
+  price_change_percentage_24h: number | null;
+};
+interface SearchCoin {
+  id: string;
+  name: string;
+  symbol: string;
+  market_cap_rank: number | null;
+  thumb: string;
+  large: string;
+  data: {
+    price?: number;
+    price_change_percentage_24h: number;
+  };
+}
+interface SearchItemProps {
+  coin: SearchItemCoin;
+  onSelect: (coinId: string) => void;
+  isActiveName: boolean;
+}

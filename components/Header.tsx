@@ -3,9 +3,35 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SearchModal } from "./SearchModal";
+import { fetcher } from "@/lib/coingecko.actions";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const pathname = usePathname();
+  const [trendingCoins, setTrendingCoins] = useState<TrendingCoin[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTrendingCoins = async () => {
+      try {
+        const data = await fetcher<{ coins: TrendingCoin[] }>(
+          "/search/trending",
+          undefined,
+          300,
+        );
+        setTrendingCoins(data.coins);
+      } catch (error) {
+        console.error("Error fetching trending coins:", error);
+        setTrendingCoins([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTrendingCoins();
+  }, []);
+
   return (
     <header>
       <div className="main-container inner">
@@ -24,7 +50,7 @@ const Header = () => {
             Home
           </Link>
 
-          <p>Search Modal</p>
+          <SearchModal initialTrendingCoins={trendingCoins} />
 
           <Link
             href="/coins"
