@@ -92,7 +92,6 @@ const ExchangeListing = async ({ coinId }: ExchangeListingProps) => {
       {
         header: "Last Traded",
         cell: (row) => {
-          console.log(row);
           const date = row.lastTradedAt ? new Date(row.lastTradedAt) : null;
           const now = new Date();
           let relativeTime = "N/A";

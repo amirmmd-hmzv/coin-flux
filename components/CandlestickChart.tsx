@@ -23,10 +23,6 @@ const CandlestickChart = ({
   coinId,
   data,
   height = null,
-  liveInterval,
-  liveOhlcv,
-  mode = "historical",
-  setLiveInterval,
 }: CandlestickChartProps) => {
   /* -------------------- React state -------------------- */
 
@@ -50,7 +46,6 @@ const CandlestickChart = ({
   // Candlestick series instance (used to update data only)
   const candleSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
 
-  const prevOhlcDataLength = useRef<number>(data?.length || 0);
 
   /* -------------------- Data fetching -------------------- */
 
@@ -131,7 +126,6 @@ const CandlestickChart = ({
       if (!entries.length) return;
       chart.applyOptions({
         width: entries[0].contentRect.width,
-        // height: entries[0].contentRect.height,
       });
     });
 
@@ -146,59 +140,6 @@ const CandlestickChart = ({
     };
   }, [period]);
 
-  /* -------------------- Effect #2: update data only -------------------- */
-  /**
-   * This effect:
-   * - Runs when data or period changes
-   * - Updates ONLY the series data
-   * - Does NOT recreate the chart
-   *
-   * This keeps updates fast and prevents flickering.
-   */
-  useEffect(() => {
-    if (!candleSeriesRef.current) return;
-
-    const convertedToSeconds = ohlcData.map(
-      (item) =>
-        [
-          Math.floor(item[0] / 1000),
-          item[1],
-          item[2],
-          item[3],
-          item[4],
-        ] as OHLCData,
-    );
-
-    let merged: OHLCData[];
-    if (liveOhlcv) {
-      const liveTimeStamp = liveOhlcv[0];
-      const lastHistorical = convertedToSeconds[convertedToSeconds.length - 1];
-
-      if ((lastHistorical && lastHistorical[0]) === liveTimeStamp) {
-        merged = [...convertedToSeconds, liveOhlcv];
-      } else {
-        merged = [...convertedToSeconds.slice(0, -1), liveOhlcv];
-      }
-    } else {
-      merged = convertedToSeconds;
-    }
-
-    merged.sort((a, b) => a[0] - b[0]); // Ensure data is sorted by timestamp
-
-    const converted = convertOHLCData(merged);
-
-
-    candleSeriesRef.current.setData(converted);
-    chartRef.current?.timeScale().fitContent();
-
-    const dataChanged = prevOhlcDataLength.current !== ohlcData.length;
-
-    if (dataChanged || mode === "historical") {
-      chartRef.current?.timeScale().fitContent();
-      prevOhlcDataLength.current = ohlcData.length;
-    }
-  }, [ohlcData, period, liveOhlcv, mode]);
-
   /* -------------------- Render -------------------- */
 
   return (
@@ -206,7 +147,7 @@ const CandlestickChart = ({
       <div className="chart-header">
         <div className="flex-1">{children}</div>
 
-        <div className="flex gap-3 items-center">
+        <div className="flex flex-wrap gap-3 items-center">
           <span className="text-sm font-medium text-purple-100/50">
             Period:
           </span>
@@ -224,36 +165,10 @@ const CandlestickChart = ({
             </button>
           ))}
         </div>
-
-        {liveInterval && (
-          <div className="button-group">
-            <span className="text-sm mx-2 font-medium text-purple-100/50">
-              Update Frequency:
-            </span>
-            {LIVE_INTERVAL_BUTTONS.map(({ value, label }) => (
-              <button
-                key={value}
-                className={
-                  liveInterval === value
-                    ? "config-button-active"
-                    : "config-button"
-                }
-                onClick={() => setLiveInterval && setLiveInterval(value)}
-                disabled={isPending}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Chart container (controlled only via ref) */}
-      <div
-        ref={chartContainerRef}
-        className="chart flex-1 "
-        //  style={{ height }}
-      />
+      <div ref={chartContainerRef} className="chart flex-1 " />
     </div>
   );
 };

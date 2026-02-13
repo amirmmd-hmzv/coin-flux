@@ -4,14 +4,11 @@ import Converter from "@/components/Converter";
 import ExchangeListing from "@/components/ExchangeListing";
 import LiveDataWrapper from "@/components/LiveDataWrapper";
 import RecentTradesSection from "@/components/RecentTradesSection";
-import { fetcher, getPools } from "@/lib/coingecko.actions";
+import { fetcher } from "@/lib/coingecko.actions";
 import { formatCurrency } from "@/lib/utils";
-import { link } from "fs";
 import { ArrowUpRight } from "lucide-react";
 import { NextPage } from "next";
 import Link from "next/link";
-
-// import { useBinanceWebSocket } from "@/hooks/useBinanceWebSocket";
 
 const CoinDetails = async ({ params }: NextPageProps) => {
   const { id } = await params;
@@ -25,28 +22,6 @@ const CoinDetails = async ({ params }: NextPageProps) => {
         precision: "full",
       }),
     ]);
-
-    const platform = coinData.asset_platform_id
-      ? coinData.detail_platforms?.[coinData.asset_platform_id]
-      : null;
-    const network = platform?.geckoterminal_url.split("/")[3] || null;
-    const contractAddress = platform?.contract_address || null;
-
-    const pool = await getPools(id, network, contractAddress);
-
-    // const coinData = await fetcher<CoinDetailsData>(`/coins/${id}`, {});
-
-    // const ohlcData = await fetcher<OHLCData>(`/coins/${id}/ohlc`, {
-    //   vs_currency: "usd",
-    //   days: 1,
-    //   precision: "full",
-    // });
-
-    //  useBinanceWebSocket({
-    //   coinId: "bitcoin",
-    //   poolId: "1",
-    //   liveInterval: "1m",
-    // });
 
     const coinDetails = [
       {
@@ -87,7 +62,6 @@ const CoinDetails = async ({ params }: NextPageProps) => {
           <LiveDataWrapper
             coinId={id}
             symbol={coinData.symbol}
-            poolId={pool.id}
             coin={coinData}
             ohlcv={ohlcData}
           />

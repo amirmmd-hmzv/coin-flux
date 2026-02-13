@@ -16,7 +16,6 @@ const Coins = async ({
   const currentPage = Number(page) || 1;
   const per_page = 10;
 
-
   const coins = await fetcher<CoinMarketData[]>("/coins/markets", {
     vs_currency: "usd",
     order: "market_cap_desc",
@@ -24,7 +23,6 @@ const Coins = async ({
     page: currentPage,
     sparkline: false,
   });
-
 
   const hasMorePage = coins.length === per_page;
   const estimatedTotalPages =
@@ -46,14 +44,16 @@ const Coins = async ({
     {
       header: "Token",
       cellClassName: "token-cell",
-      cell: (coin) => (
-        <div className="token-info">
-          <Image src={coin.image} alt={coin.name} width={36} height={36} />
-          <p>
-            {coin.name} ({coin.symbol.toUpperCase()})
-          </p>
-        </div>
-      ),
+      cell: (coin) => {
+        return (
+          <div className="token-info">
+            <Image src={coin?.image || "/globe.svg"} alt={coin?.name} width={36} height={36} />
+            <p>
+              {coin?.name} ({coin?.symbol.toUpperCase()})
+            </p>
+          </div>
+        );
+      },
     },
     {
       header: "Price",

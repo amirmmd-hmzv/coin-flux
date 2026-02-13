@@ -4,136 +4,138 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: #121212; /* تاریک */
-  --color-foreground: #e0e0e0; /* سفید روشن */
+  --color-background: #0b1117; /* Deep midnight */
+  --color-foreground: #e6eef8; /* Premium white text */
   --font-sans: "Arial", sans-serif;
   --font-mono: "Courier", monospace;
-  --color-sidebar-ring: #004d40; /* آبی تیره */
-  --color-sidebar-border: #9c27b0; /* بنفش */
-  --color-sidebar-accent-foreground: #00ff80; /* سبز نئونی */
-  --color-sidebar-accent: #00ff80; /* سبز نئونی */
-  --color-sidebar-primary-foreground: #e0e0e0; /* سفید */
-  --color-sidebar-primary: #004d40; /* آبی تیره */
-  --color-sidebar-foreground: #00ff80; /* سبز نئونی */
-  --color-sidebar: #1c1c1c; /* پس‌زمینه تاریک */
-  --color-chart-5: #00ff80; /* سبز نئونی */
-  --color-chart-4: #ffeb3b; /* زرد */
-  --color-chart-3: #9c27b0; /* بنفش */
-  --color-chart-2: #004d40; /* آبی تیره */
-  --color-chart-1: #00ff80; /* سبز نئونی */
-  --color-ring: #004d40; /* آبی تیره */
-  --color-input: #2f2f2f; /* خاکی تیره */
-  --color-border: #2f2f2f; /* خاکی تیره */
-  --color-destructive: #f44336; /* قرمز */
-  --color-accent-foreground: #00ff80; /* سبز نئونی */
-  --color-accent: #00ff80; /* سبز نئونی */
-  --color-muted-foreground: #2f2f2f; /* خاکی تیره */
-  --color-muted: #2f2f2f; /* خاکی تیره */
-  --color-secondary-foreground: #004d40; /* آبی تیره */
-  --color-secondary: #004d40; /* آبی تیره */
-  --color-primary-foreground: #e0e0e0; /* سفید */
-  --color-primary: #00ff80; /* سبز نئونی */
-  --color-popover-foreground: #00ff80; /* سبز نئونی */
-  --color-popover: #121212; /* پس‌زمینه تاریک */
-  --color-card-foreground: #00ff80; /* سبز نئونی */
-  --color-card: #1c1c1c; /* پس‌زمینه تاریک */
+  --color-sidebar-ring: #0f2a22; /* Deep teal */
+  --color-sidebar-border: #7c3aed; /* Modern purple */
+  --color-sidebar-accent-foreground: #00e676; /* Premium green */
+  --color-sidebar-accent: #00e676; /* Premium green */
+  --color-sidebar-primary-foreground: #e6eef8; /* Premium white */
+  --color-sidebar-primary: #0f2a22; /* Deep teal */
+  --color-sidebar-foreground: #00e676; /* Premium green */
+  --color-sidebar: #0b1117; /* Deep midnight */
+  --color-chart-5: #00e676; /* Premium green */
+  --color-chart-4: #7c3aed; /* Modern purple */
+  --color-chart-3: #0f2a22; /* Deep teal */
+  --color-chart-2: #00e676; /* Premium green */
+  --color-chart-1: #00e676; /* Premium green */
+  --color-ring: #0f2a22; /* Deep teal */
+  --color-input: rgba(255, 255, 255, 0.06); /* Subtle input */
+  --color-border: rgba(255, 255, 255, 0.06); /* Subtle border */
+  --color-destructive: #ef4444; /* Clean red */
+  --color-accent-foreground: #00e676; /* Premium green */
+  --color-accent: #7c3aed; /* Modern purple */
+  --color-muted-foreground: #94a3b8; /* Muted text */
+  --color-muted: rgba(255, 255, 255, 0.06); /* Subtle muted */
+  --color-secondary-foreground: #e6eef8; /* Premium white */
+  --color-secondary: #0f2a22; /* Deep teal */
+  --color-primary-foreground: #04130c; /* Deep green */
+  --color-primary: #00e676; /* Premium green */
+  --color-popover-foreground: #e6eef8; /* Premium white */
+  --color-popover: #0f1c24; /* Card surface */
+  --color-card-foreground: #e6eef8; /* Premium white */
+  --color-card: #0f1c24; /* Card surface */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
   /* Brand colors */
-  --color-dark-900: #000510;
-  --color-dark-700: #0f1316;
-  --color-dark-500: #1a2027;
-  --color-dark-400: #1e2833;
+  --color-dark-900: #0b1117;
+  --color-dark-700: #0f1c24;
+  --color-dark-500: #1a2834;
+  --color-dark-400: #253141;
 
-  --purple-600: #9c27b0; /* بنفش */
-  --purple-100: #a3aed0; /* بنفش روشن */
+  --purple-600: #7c3aed; /* Modern purple */
+  --purple-100: #c4b5fd; /* Purple light */
 
-  --green-500: #00ff80; /* سبز نئونی */
-  --green-400: #2ebe7b; /* سبز روشن */
-  --green-300: #99e39e; /* سبز ملایم */
+  --green-500: #00e676; /* Premium green */
+  --green-400: #06d44e; /* Green secondary */
+  --green-300: #35e888; /* Green light */
 
-  --red-500: #f44336; /* قرمز */
-  --yellow-500: #ffeb3b; /* زرد */
+  --red-500: #ef4444; /* Clean red */
+  --yellow-500: #fbbf24; /* Warm yellow */
 }
 
 :root {
   --radius: 0.625rem;
-  --background: #121212;
-  --foreground: #e0e0e0;
-  --card: #1c1c1c;
-  --card-foreground: #00ff80;
-  --popover: #121212;
-  --popover-foreground: #00ff80;
-  --primary: #00ff80;
-  --primary-foreground: #e0e0e0;
-  --secondary: #004d40;
-  --secondary-foreground: #00ff80;
-  --muted: #2f2f2f;
-  --muted-foreground: #2f2f2f;
-  --accent: #00ff80;
-  --accent-foreground: #004d40;
-  --destructive: #f44336;
-  --border: #2f2f2f;
-  --input: #2f2f2f;
-  --ring: #004d40;
-  --chart-1: #00ff80;
-  --chart-2: #004d40;
-  --chart-3: #9c27b0;
-  --chart-4: #ffeb3b;
-  --chart-5: #00ff80;
-  --sidebar: #121212;
-  --sidebar-foreground: #e0e0e0;
-  --sidebar-primary: #004d40;
-  --sidebar-primary-foreground: #e0e0e0;
-  --sidebar-accent: #00ff80;
-  --sidebar-accent-foreground: #004d40;
-  --sidebar-border: #2f2f2f;
-  --sidebar-ring: #004d40;
+  --background: #0b1117;
+  --foreground: #e6eef8;
+  --card: #0f1c24;
+  --card-foreground: #e6eef8;
+  --popover: #0f1c24;
+  --popover-foreground: #e6eef8;
+  --primary: #00e676;
+  --primary-foreground: #04130c;
+  --secondary: #0f2a22;
+  --secondary-foreground: #e6eef8;
+  --muted: #0f1c24;
+  --muted-foreground: #94a3b8;
+  --accent: #7c3aed;
+  --accent-foreground: #e6eef8;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.06);
+  --input: rgba(255, 255, 255, 0.06);
+  --ring: rgba(0, 230, 118, 0.2);
+  --chart-1: #00e676;
+  --chart-2: #0f2a22;
+  --chart-3: #7c3aed;
+  --chart-4: #fbbf24;
+  --chart-5: #00e676;
+  --sidebar: #0b1117;
+  --sidebar-foreground: #e6eef8;
+  --sidebar-primary: #0f2a22;
+  --sidebar-primary-foreground: #e6eef8;
+  --sidebar-accent: #00e676;
+  --sidebar-accent-foreground: #04130c;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #0f2a22;
 }
 
 .dark {
-  --background: #121212;
-  --foreground: #e0e0e0;
-  --card: #1c1c1c;
-  --card-foreground: #00ff80;
-  --popover: #121212;
-  --popover-foreground: #00ff80;
-  --primary: #00ff80;
-  --primary-foreground: #e0e0e0;
-  --secondary: #004d40;
-  --secondary-foreground: #00ff80;
-  --muted: #2f2f2f;
-  --muted-foreground: #2f2f2f;
-  --accent: #00ff80;
-  --accent-foreground: #004d40;
-  --destructive: #f44336;
-  --border: #2f2f2f;
-  --input: #2f2f2f;
-  --ring: #004d40;
-  --chart-1: #00ff80;
-  --chart-2: #004d40;
-  --chart-3: #9c27b0;
-  --chart-4: #ffeb3b;
-  --chart-5: #00ff80;
-  --sidebar: #121212;
-  --sidebar-foreground: #e0e0e0;
-  --sidebar-primary: #004d40;
-  --sidebar-primary-foreground: #e0e0e0;
-  --sidebar-accent: #00ff80;
-  --sidebar-accent-foreground: #004d40;
-  --sidebar-border: #2f2f2f;
-  --sidebar-ring: #004d40;
+  --background: #0b1117;
+  --foreground: #e6eef8;
+  --card: #0f1c24;
+  --card-foreground: #e6eef8;
+  --popover: #0f1c24;
+  --popover-foreground: #e6eef8;
+  --primary: #00e676;
+  --primary-foreground: #04130c;
+  --secondary: #0f2a22;
+  --secondary-foreground: #e6eef8;
+  --muted: #0f1c24;
+  --muted-foreground: #94a3b8;
+  --accent: #7c3aed;
+  --accent-foreground: #e6eef8;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.06);
+  --input: rgba(255, 255, 255, 0.06);
+  --ring: rgba(124, 58, 237, 0.2);
+  --chart-1: #00e676;
+  --chart-2: #0f2a22;
+  --chart-3: #7c3aed;
+  --chart-4: #fbbf24;
+  --chart-5: #00e676;
+  --sidebar: #0b1117;
+  --sidebar-foreground: #e6eef8;
+  --sidebar-primary: #0f2a22;
+  --sidebar-primary-foreground: #e6eef8;
+  --sidebar-accent: #00e676;
+  --sidebar-accent-foreground: #04130c;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #0f2a22;
 }
+
+
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background  text-foreground;
   }
 }
 
@@ -160,7 +162,7 @@
   }
 
   header {
-    @apply border-b border-dark-400 h-20;
+    @apply border-b border-primary/20 h-20 sticky top-0 z-40 bg-background/98 backdrop-blur-md shadow-lg shadow-primary/5;
 
     .inner {
       @apply flex justify-between items-center h-full;
@@ -170,14 +172,14 @@
       }
 
       nav {
-        @apply flex h-full items-center;
+        @apply flex h-full items-center gap-1 sm:gap-3;
 
         .nav-link {
-          @apply px-6 py-5 flex items-center transition-all hover:text-white font-medium h-full text-purple-100 cursor-pointer  duration-150;
+          @apply px-4 sm:px-5 py-2.5 flex items-center gap-2 transition-all hover:bg-primary/5 hover:border-primary/20 font-semibold h-fit text-muted-foreground hover:text-foreground cursor-pointer duration-200 rounded-lg text-sm sm:text-base border border-transparent;
         }
 
         .nav-link.is-active {
-          @apply text-white font-bold;
+          @apply text-primary bg-primary/15 border-primary/40 shadow-lg shadow-primary/10;
         }
 
         .nav-link.is-home {
@@ -194,13 +196,13 @@
       @apply flex flex-col gap-3 xl:flex-row xl:items-center mb-4 font-semibold text-[#e6eef8] text-[20px];
     }
 
-    .config-button {
-      @apply rounded-sm border-0 cursor-pointer px-2.5 py-2 text-xs xl:text-sm text-purple-100 hover:bg-dark-400 hover:text-white;
-    }
+  .config-button {
+  @apply rounded-sm border-0 cursor-pointer px-1.5 py-1.5 text-[10px] sm:px-2 sm:py-1.5 sm:text-xs xl:px-2.5 xl:py-2 xl:text-sm text-purple-100 hover:bg-dark-400 hover:text-white;
+}
 
-    .config-button-active {
-      @apply rounded-sm px-2.5 py-1.5 border-0 cursor-pointer text-sm text-gray-900 bg-green-500;
-    }
+.config-button-active {
+  @apply rounded-sm  px-1.5 py-1 border-0 cursor-pointer text-[10px] sm:px-2 sm:py-1.5 sm:text-xs xl:px-2.5 xl:py-1.5 xl:text-sm text-gray-900 bg-green-500;
+}
 
     .chart {
       @apply w-full min-h-50;
@@ -318,7 +320,7 @@
       }
 
       .change-cell {
-        @apply font-medium py-4 pr-3 md:pr-5;
+        @apply font-medium py-4 pr-3 pl-8! md:pl-0 md:pr-5;
       }
 
       .price-cell {
@@ -493,38 +495,37 @@
     .recent-section {
       @apply size-full xl:col-span-3;
 
+      .trades {
+        @apply w-full my-8 space-y-4;
 
-           .trades {
-      @apply w-full my-8 space-y-4;
-
-      h4 {
-        @apply text-xl md:text-2xl font-semibold mb-2;
-      }
-    }
-
-    .trades-table {
-      @apply bg-dark-500 mt-5 rounded-xl overflow-hidden;
-
-      .price-cell {
-        @apply pl-5 py-5 font-medium;
+        h4 {
+          @apply text-xl md:text-2xl font-semibold mb-2;
+        }
       }
 
-      .amount-cell {
-        @apply py-4 font-medium;
-      }
+      .trades-table {
+        @apply bg-dark-500 mt-5 rounded-xl overflow-hidden;
 
-      .value-cell {
-        @apply font-medium;
-      }
+        .price-cell {
+          @apply pl-5 py-5 font-medium;
+        }
 
-      .type-cell {
-        @apply font-medium;
-      }
+        .amount-cell {
+          @apply py-4 font-medium;
+        }
 
-      .time-cell {
-        @apply pr-5;
+        .value-cell {
+          @apply font-medium;
+        }
+
+        .type-cell {
+          @apply font-medium;
+        }
+
+        .time-cell {
+          @apply pr-5;
+        }
       }
-    }
     }
 
     .exchange-section {
@@ -574,7 +575,7 @@
         @apply rounded-lg grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-3 sm:gap-5;
 
         li {
-          @apply text-base bg-dark-500 px-5 py-6 rounded-lg flex flex-col gap-3;
+          @apply text-base bg-dark-500 px-5 py-6 rounded-lg flex flex-col gap-3 border;
 
           .label {
             @apply text-purple-100;
@@ -815,7 +816,7 @@
       @apply grid grid-cols-3 mt-8 gap-4 sm:gap-6 w-fit;
 
       li {
-        @apply text-base border-r last:border-none border-purple-600 flex flex-col gap-2;
+        @apply text-base bg-dark-500 px-5 py-6 rounded-lg flex flex-col gap-3  border;
 
         .label {
           @apply text-purple-100 max-sm:text-sm;

@@ -83,7 +83,6 @@ export const SearchModal = ({
     [searchQuery],
   );
 
-  console.log(debouncedQuery);
 
   const { data: searchResults = [], isValidating: isSearching } = useSWR<
     SearchCoin[]

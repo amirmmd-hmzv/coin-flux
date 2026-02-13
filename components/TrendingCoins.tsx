@@ -1,6 +1,5 @@
 import { fetcher } from "@/lib/coingecko.actions";
 import DataTable from "./DataTable";
-import { trendingCoinsData } from "@/app/data/trendingCoins";
 import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import Link from "next/link";

@@ -89,14 +89,7 @@ interface CoinDetailsData {
 }
 
 type OHLCData = [number, number, number, number, number];
-type Period =
-  | "daily"
-  | "weekly"
-  | "monthly"
-  | "3months"
-  | "6months"
-  | "yearly"
-  | "max";
+type Period = "daily" | "weekly" | "monthly" | "3months" | "6months" | "yearly";
 
 interface CandlestickChartProps {
   data?: OHLCData[];
@@ -193,7 +186,6 @@ interface PoolData {
 
 interface LiveDataProps {
   coinId: string;
-  poolId: string;
   coin: CoinDetailsData;
   ohlcv?: OHLCData[];
   symbol: string;
@@ -256,4 +248,53 @@ interface SearchItemProps {
   coin: SearchItemCoin;
   onSelect: (coinId: string) => void;
   isActiveName: boolean;
+}
+type TradeU = {
+  price: number;
+  amount: number;
+  value: number;
+  timestamp: number;
+  type: "b" | "s";
+};
+
+// ===== Search Endpoint =====
+interface SearchCoinItem {
+  id: string;
+  name: string;
+  symbol: string;
+  thumb: string;
+}
+
+interface SearchResponse {
+  coins: SearchCoinItem[];
+}
+
+// ===== Markets Endpoint =====
+interface MarketImage {
+  thumb?: string;
+  large?: string;
+}
+
+interface MarketCoin {
+  id: string;
+  name: string;
+  symbol: string;
+  current_price: number;
+  price_change_percentage_24h: number;
+  image: MarketImage;
+  market_cap_rank: number | null;
+}
+
+// ===== Final Returned Type =====
+interface SearchCoin {
+  id: string;
+  name: string;
+  symbol: string;
+  thumb: string;
+  large: string;
+  market_cap_rank: number | null;
+  data: {
+    price?: number;
+    price_change_percentage_24h: number;
+  };
 }

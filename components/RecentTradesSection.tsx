@@ -3,17 +3,14 @@
 import { useBinanceWebSocket } from "@/hooks/useBinanceWebSocket";
 import DataTable from "./DataTable";
 import { formatCurrency, timeAgo } from "@/lib/utils";
-import { useLiveInterval } from "@/context/LiveIntervalContext";
 
 interface RecentTradesSectionProps {
   symbol: string;
 }
 
 const RecentTradesSection = ({ symbol }: RecentTradesSectionProps) => {
-  const { liveInterval, setLiveInterval } = useLiveInterval();
 
   const { trades } = useBinanceWebSocket({
-    interval: liveInterval,
     symbol: `${symbol.toUpperCase()}USDT`,
   });
 
@@ -57,28 +54,6 @@ const RecentTradesSection = ({ symbol }: RecentTradesSectionProps) => {
         <div className="trades w-full my-8 space-y-4">
           <div className="flex items-center justify-between">
             <h4>Recent Trades</h4>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setLiveInterval("1m")}
-                className={`px-3 py-1 rounded text-sm font-medium transition-all ${
-                  liveInterval === "1m"
-                    ? "bg-green-500 text-dark-900"
-                    : "bg-dark-400 text-purple-100 hover:bg-dark-400/70"
-                }`}
-              >
-                1m
-              </button>
-              <button
-                onClick={() => setLiveInterval("7m")}
-                className={`px-3 py-1 rounded text-sm font-medium transition-all ${
-                  liveInterval === "7m"
-                    ? "bg-green-500 text-dark-900"
-                    : "bg-dark-400 text-purple-100 hover:bg-dark-400/70"
-                }`}
-              >
-                7m
-              </button>
-            </div>
           </div>
           <DataTable
             columns={tradeColumns}
