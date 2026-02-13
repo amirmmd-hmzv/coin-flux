@@ -6,6 +6,14 @@ import { TrendingDown, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+
+export const metadata = {
+  title: "All Cryptocurrencies | Live Market Rankings - CoinFlux",
+  description:
+    "Browse all cryptocurrencies ranked by market cap. View live prices, 24-hour percentage changes, and up-to-date market data for top digital assets.",
+};
+
+
 const Coins = async ({
   searchParams,
 }: {

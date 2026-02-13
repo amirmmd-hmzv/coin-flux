@@ -119,3 +119,10 @@ export function timeAgo(date: string | number | Date): string {
   // Format date as YYYY-MM-DD
   return past.toISOString().split('T')[0];
 }
+
+export function toPascalCase(str: string) {
+  return str
+    .split(/[-_ ]+/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}

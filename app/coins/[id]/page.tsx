@@ -5,10 +5,24 @@ import ExchangeListing from "@/components/ExchangeListing";
 import LiveDataWrapper from "@/components/LiveDataWrapper";
 import RecentTradesSection from "@/components/RecentTradesSection";
 import { fetcher } from "@/lib/coingecko.actions";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, toPascalCase } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
-import { NextPage } from "next";
+import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
+
+export async function generateMetadata(
+  { params, searchParams }: NextPageProps,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  // read route params
+  const { id } = await params;
+
+  const coinName = toPascalCase(id);
+  return {
+    title: `${coinName} Price, Live Chart, Market Cap & Latest News - CoinFlux`,
+    description: `Track the latest ${coinName} price, view live charts, market cap, trading volume, and 24-hour performance. Stay updated with real-time ${coinName} data on CoinFlux.`,
+  };
+}
 
 const CoinDetails = async ({ params }: NextPageProps) => {
   const { id } = await params;
