@@ -1,9 +1,15 @@
-# CoinFlux 🚀
+<div align="center">
+
+  <img src="./public/banner.png" width="800" />
+
+
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC)
 ![License](https://img.shields.io/badge/License-MIT-green)
+
+</div>
 
 ## 🔹 Project Overview
 
