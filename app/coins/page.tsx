@@ -66,7 +66,7 @@ const Coins = async ({
     {
       header: "Price",
       cellClassName: "price-cell",
-      cell: (coin) => <p>${formatCurrency(coin.current_price)}</p>,
+      cell: (coin) => <p>{formatCurrency(coin.current_price)}</p>,
     },
     {
       header: "24h Change",
