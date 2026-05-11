@@ -13,7 +13,10 @@ export const useBinanceWebSocket = ({ symbol }: { symbol: string }) => {
   const [isWsReady, setIsWsReady] = useState(false);
 
   useEffect(() => {
-    if (!symbol || !WS_BASE_URL) return;
+    if (!symbol || !WS_BASE_URL) {
+      console.log("[BinanceWS] No symbol or WS_BASE_URL provided");
+      return;
+    }
 
     let isMounted = true;
 
@@ -23,13 +26,16 @@ export const useBinanceWebSocket = ({ symbol }: { symbol: string }) => {
     ].join("/");
 
     const connect = () => {
+      console.log(
+        `[BinanceWS] Connecting to: ${WS_BASE_URL}?streams=${streams}`,
+      );
       const ws = new WebSocket(`${WS_BASE_URL}?streams=${streams}`);
       wsRef.current = ws;
 
       ws.onopen = () => {
         if (!isMounted) return;
         setIsWsReady(true);
-        console.log("Binance WS connected");
+        console.log("[BinanceWS] Connected");
       };
 
       ws.onmessage = (event) => {
@@ -39,6 +45,7 @@ export const useBinanceWebSocket = ({ symbol }: { symbol: string }) => {
         try {
           parsed = JSON.parse(event.data);
         } catch {
+          console.log("[BinanceWS] Failed to parse message", event.data);
           return;
         }
 
@@ -71,17 +78,19 @@ export const useBinanceWebSocket = ({ symbol }: { symbol: string }) => {
         }
       };
 
-      ws.onerror = () => {
+      ws.onerror = (event) => {
         if (!isMounted) return;
         setIsWsReady(false);
+        console.log("[BinanceWS] Error", event);
       };
 
-      ws.onclose = () => {
+      ws.onclose = (event) => {
         if (!isMounted) return;
         setIsWsReady(false);
-        console.log("WS closed");
+        console.log("[BinanceWS] Closed", event);
 
         // 🔁 auto reconnect (after 2s)
+        console.log("[BinanceWS] Reconnecting in 2s...");
         reconnectTimeoutRef.current = setTimeout(() => {
           connect();
         }, 2000);
@@ -98,6 +107,7 @@ export const useBinanceWebSocket = ({ symbol }: { symbol: string }) => {
       }
 
       wsRef.current?.close();
+      console.log("[BinanceWS] Cleanup: closed connection");
     };
   }, [symbol]);
 

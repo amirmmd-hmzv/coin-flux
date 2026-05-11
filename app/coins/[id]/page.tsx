@@ -115,7 +115,6 @@ const CoinDetails = async ({ params }: NextPageProps) => {
               })}
             </ul>
 
-            <p>Top Gainers And Losers</p>
           </div>
         </section>
 
